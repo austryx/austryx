@@ -1,0 +1,18 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+const path = Astro.url.pathname;
+---
+<BaseLayout title="404: Not Found" description="Page not found.">
+  <div class="text-lg md:text-xl">
+    <span class="text-accent">&gt; </span>
+    <span class="text-text-secondary">austryx@dev:~$</span>
+    <span class="text-text"> cd {path}</span>
+  </div>
+  <p class="mt-2 text-lg md:text-xl">
+    bash: no such file or directory: {path}
+  </p>
+  <a href="/" class="text-accent hover:underline mt-8 inline-block text-lg">
+    &gt; go home
+  </a>
+</BaseLayout>
