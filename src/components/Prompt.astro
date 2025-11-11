@@ -1,0 +1,25 @@
+---
+import TypeWriter from '~/components/TypeWriter.astro';
+export interface Props {
+  command: string;
+  typeCommand?: boolean; // Set to true to type the command
+  speed?: number;
+  'data-output'?: string; // Pass-through for the sequencer
+}
+const { command, typeCommand = false, speed = 80 } = Astro.props;
+const dataOutput = Astro.props['data-output'];
+---
+
+<div class="text-lg">
+  <span class="text-accent">&gt; </span>
+  <span class="text-text-secondary">austryx@dev:~$</span>
+  {typeCommand ? (
+    <TypeWriter 
+      text={` ${command}`} 
+      speed={speed} 
+      data-output={dataOutput} 
+    />
+  ) : (
+    <span class="text-text"> {command}</span>
+  )}
+</div>

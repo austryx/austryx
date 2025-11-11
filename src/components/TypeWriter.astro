@@ -1,0 +1,97 @@
+---
+export interface Props {
+  text: string;
+  speed?: number;
+  'data-output'?: string; // This links the typed text to its output block
+}
+const { text, speed = 100 } = Astro.props;
+const dataOutput = Astro.props['data-output'];
+---
+<span 
+  data-text={text} 
+  data-speed={speed} 
+  data-output={dataOutput}
+></span>
+<span 
+  class="inline-block w-2.5 h-5 bg-text-secondary align-middle ml-1 animate-blink motion-safe:animate-blink motion-reduce:hidden" 
+  aria-hidden="true"
+></span>
+
+<script>
+  class TypeWriter {
+    el: HTMLElement;
+    text: string;
+    speed: number;
+    cursor: HTMLElement | null;
+    index: number = 0;
+
+    constructor(el: HTMLElement) {
+      this.el = el;
+      this.text = el.dataset.text || "";
+      this.speed = parseInt(el.dataset.speed || "100", 10);
+      this.cursor = el.nextElementSibling as HTMLElement;
+    }
+
+    type(onComplete: () => void) {
+      if (this.index < this.text.length) {
+        this.el.textContent += this.text.charAt(this.index);
+        this.index++;
+        setTimeout(() => this.type(onComplete), this.speed);
+      } else {
+        if (this.cursor) {
+          this.cursor.style.display = 'none';
+        }
+        onComplete(); // Run the callback when typing is finished
+      }
+    }
+  }
+
+  async function runTypeSequence() {
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    
+    // Get all elements to be typed
+    const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-text]'));
+    
+    // Get all output blocks
+    const outputs = document.querySelectorAll<HTMLElement>('.command-output');
+
+    if (motionQuery.matches) {
+      // If user prefers reduced motion, show everything instantly
+      elements.forEach(el => el.textContent = el.dataset.text || "");
+      outputs.forEach(out => out.style.visibility = 'visible');
+      document.querySelectorAll('[data-text] + span').forEach(c => (c as HTMLElement).style.display = 'none');
+      return; // Stop here
+    }
+
+    // 1. Hide all outputs
+    outputs.forEach(out => out.style.visibility = 'hidden');
+
+    // 2. Loop through each typewriter element one by one
+    for (const el of elements) {
+      // Find the output block this element is supposed to reveal
+      const outputId = el.dataset.output;
+      const outputEl = outputId ? document.getElementById(outputId) : null;
+
+      // 3. Wrap the typing in a Promise
+      const typePromise = new Promise<void>(resolve => {
+        new TypeWriter(el).type(resolve); // Pass 'resolve' as the callback
+      });
+
+      // 4. Wait for the typing to finish
+      await typePromise;
+
+      // 5. Show the corresponding output block
+      if (outputEl) {
+        outputEl.style.visibility = 'visible';
+      }
+
+      // 6. Pause briefly before typing the next command
+      if (elements.indexOf(el) < elements.length - 1) {
+        await new Promise(res => setTimeout(res, 350)); // 350ms pause
+      }
+    }
+  }
+
+  // Run the whole sequence when the page is loaded
+  document.addEventListener('DOMContentLoaded', runTypeSequence);
+</script>

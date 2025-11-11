@@ -1,0 +1,47 @@
+/* Import JetBrains Mono font */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-start: #2a0060;
+    --bg-end: #120022;
+  }
+
+  html {
+    @apply font-mono bg-bg-end text-text;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-gradient bg-no-repeat bg-fixed min-h-screen;
+  }
+
+  /* Basic link styling */
+  a {
+    @apply text-accent outline-none;
+  }
+  a:hover, a:focus {
+    @apply underline;
+  }
+  a:focus-visible {
+    @apply ring-2 ring-accent ring-offset-2 ring-offset-bg-end;
+  }
+
+  /* REMOVED: pre[data-theme="night-owl"] styles */
+  /* REMOVED: .post-content styles */
+}
+
+/* Subtle CRT/scanline overlay as requested */
+.scanline-overlay {
+  @apply pointer-events-none fixed inset-0 z-50 opacity-[0.03] motion-reduce:hidden;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+}
