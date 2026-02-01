@@ -18,15 +18,6 @@ this whole thing is basically just a learning journey. i like building tools tha
 
 ---
 
-### stats, but pretty empty (for now)
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=austryx&show_icons=true&theme=radical&hide_border=true&bg_color=0D1117&title_color=a76dff&icon_color=a76dff&text_color=cccccc" height="165">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=austryx&layout=compact&theme=radical&hide_border=true&bg_color=0D1117&title_color=a76dff&text_color=cccccc" height="165">
-</p>
-
----
-
-
 ### socials
 - 🦋 [https://austryx.bsky.social/](https://austryx.bsky.social/) 
 - ✖️ [x.com/austryxx](https://x.com/austryxx)  
