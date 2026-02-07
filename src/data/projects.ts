@@ -10,8 +10,13 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    "name": "[pending]",
-    "desc": "initializing new projects... stand by.",
-    "links": { "repo": "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }
+    name: "[dotfiles]",
+    desc: "Automated opinionated environment setup... for me.",
+    links: { repo: "https://github.com/austryx/dotfiles" },
+  },
+  {
+    name: "[pending]",
+    desc: "initializing new projects... stand by.",
+    links: { repo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
   },
 ];

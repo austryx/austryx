@@ -1,155 +1,153 @@
 ---
-import BaseLayout from '~/layouts/BaseLayout.astro';
-import TypeWriter from '~/components/TypeWriter.astro';
-import Prompt from '~/components/Prompt.astro';
-import { projects, type Project } from '~/data/projects';
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import TypeWriter from "~/components/TypeWriter.astro";
+import Prompt from "~/components/Prompt.astro";
+import { projects, type Project } from "~/data/projects";
 
-const longestName = Math.max(...projects.map(p => p.name.length));
+const longestName = Math.max(...projects.map((p) => p.name.length));
 
 const socials = [
-  { name: "bluesky", url: "https://austryx.bsky.social" },
-  { name: "mastodon", url: "https://mastodon.social/@austryx" },
-  { name: "X (twitter)", url: "https://x.com/austryxx" },
-  { name: "github", url: "https://github.com/austryx" }
+    { name: "bluesky", url: "https://austryx.bsky.social" },
+    { name: "mastodon", url: "https://mastodon.social/@austryx" },
+    { name: "X (twitter)", url: "https://x.com/austryxx" },
+    { name: "github", url: "https://github.com/austryx" },
 ];
-const longestSocialName = Math.max(...socials.map(s => s.name.length));
+const longestSocialName = Math.max(...socials.map((s) => s.name.length));
 ---
 
-<BaseLayout 
-  title="austryx"
-  description="break things on accident, fix things on purpose."
+<BaseLayout
+    title="austryx"
+    description="break things on accident, fix things on purpose."
 >
-  <section class="min-h-[20vh] flex flex-col justify-center">
-    <div class="text-lg md:text-xl">
-      <span class="text-accent">&gt; </span>
-      <span class="text-text-secondary">austryx@dev:~$</span>
-      <TypeWriter text=" whoami" speed={120} data-output="hero-output" />
-    </div>
-    <p 
-      class="mt-2 text-lg md:text-xl command-output" 
-      id="hero-output"
-    >
-      break things on accident, fix things on purpose.
-    </p>
-  </section>
+    <section class="min-h-[20vh] flex flex-col justify-center">
+        <div class="text-lg md:text-xl">
+            <span class="text-accent">&gt; </span>
+            <span class="text-text-secondary">austryx@dev:~$</span>
+            <TypeWriter text=" whoami" speed={120} data-output="hero-output" />
+        </div>
+        <p class="mt-2 text-lg md:text-xl command-output" id="hero-output">
+            break things on accident, fix things on purpose.
+        </p>
+    </section>
 
-  <section id="projects" class="mt-16 scroll-mt-16">
-    <Prompt 
-      command="ls -l ./projects" 
-      typeCommand={true} 
-      speed={80} 
-      data-output="projects-output" 
-    />
-    <div class="command-output" id="projects-output">
-      <ul class="mt-6 space-y-3">
-        {projects.map(project => (
-          <li class="font-mono text-sm md:text-base">
-            <span class="text-accent">
-              - {project.name.padEnd(longestName)}
-            </span>
-            <span class="text-text-secondary">
-              # {project.desc}
-            </span>
-            <span class="whitespace-nowrap space-x-2 ml-2">
-              <a 
-                href={project.links.repo} 
-                target="_blank" 
+    <section id="projects" class="mt-16 scroll-mt-16">
+        <Prompt
+            command="ls -l ./projects"
+            typeCommand={true}
+            speed={80}
+            data-output="projects-output"
+        />
+        <div class="command-output" id="projects-output">
+            <ul class="mt-6 space-y-3">
+                {
+                    projects.map((project) => (
+                        <li class="font-mono text-sm md:text-base">
+                            <span class="text-accent">
+                                - {project.name.padEnd(longestName)}
+                            </span>
+                            <span class="text-text-secondary">
+                                # {project.desc}
+                            </span>
+                            <span class="whitespace-nowrap space-x-2 ml-2">
+                                <a
+                                    href={project.links.repo}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    [repo]
+                                </a>
+                                {project.links.docs && (
+                                    <a
+                                        href={project.links.docs}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        [docs]
+                                    </a>
+                                )}
+                            </span>
+                        </li>
+                    ))
+                }
+            </ul>
+            <a
+                href="https://github.com/austryx"
+                target="_blank"
                 rel="noopener noreferrer"
-              >
-                [repo]
-              </a>
-              {project.links.docs && (
-                <a 
-                  href={project.links.docs} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
-                  [docs]
-                </a>
-              )}
-            </span>
-          </li>
-        ))}
-      </ul>
-      <a 
-        href="https://github.com/austryx" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        class="inline-block mt-6 text-accent"
-      >
-        &gt; view all on github
-      </a>
-    </div>
-  </section>
-  
-  <section id="about" class="mt-16 scroll-mt-16">
-    <Prompt 
-      command="cat ./about.txt" 
-      typeCommand={true} 
-      speed={60} 
-      data-output="about-output" 
-    />
-    <div 
-      class="mt-6 space-y-4 text-text-secondary command-output" 
-      id="about-output"
-    >
-      <p>
-        My focus is on building tools that solve real problems.
-        I'm driven by creating things that others find genuinely
-        useful in their daily lives.
-      </p>
-      <p>
-        I began in the web space, but my interests quickly expanded into the 
-        self-hosting and foss. This experience led me to a clear realization: 
-        I wanted to shift from *using* open-source tools to 
-        actually *building* them.
-      </p>
-      <p>
-        Today, my time is spent developing small tools
-        that streamline my own common tasks. 
-      </p>
-      <p>
-        The goal is simple: keep learning, keep building, and contribute
-        reliable tools back to the open-source community.
-      </p>
-  </section>
+                class="inline-block mt-6 text-accent"
+            >
+                &gt; view all on github
+            </a>
+        </div>
+    </section>
 
-  <section id="connect" class="mt-16 scroll-mt-16">
-    <Prompt 
-      command="connect" 
-      typeCommand={true} 
-      speed={60} 
-      data-output="connect-output" 
-    />
-    <div 
-      class="mt-6 command-output" 
-      id="connect-output"
-    >
-      <ul class="space-y-2">
-        {socials.map(social => (
-          <li class="font-mono text-sm md:text-base">
-            <span class="text-accent">
-              - {social.name.padEnd(longestSocialName)}
-            </span>
-            <span class="text-text-secondary ml-2">
-              # <a 
-                  href={social.url} 
-                  target="_blank" 
-                  class="text-text-secondary hover:text-accent underline"
-                  
-                  rel:list={[
-                    "noopener",
-                    "noreferrer",
-                    social.name === "mastodon" && "me"
-                  ]}
-                >
-                  {social.url}
-                </a>
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
+    <section id="about" class="mt-16 scroll-mt-16">
+        <Prompt
+            command="cat ./about.txt"
+            typeCommand={true}
+            speed={60}
+            data-output="about-output"
+        />
+        <div
+            class="mt-6 space-y-4 text-text-secondary command-output"
+            id="about-output"
+        >
+            <p>
+                My focus is on building tools that solve real problems. I'm
+                driven by creating things that others find genuinely useful in
+                their daily lives.
+            </p>
+            <p>
+                I began in the web space, but my interests quickly expanded into
+                the self-hosting and foss. This experience led me to a clear
+                realization: I wanted to shift from *using* open-source tools to
+                actually *building* them.
+            </p>
+            <p>
+                Today, my time is spent developing small tools that streamline
+                my own common tasks.
+            </p>
+            <p>
+                The goal is simple: keep learning, keep building, and contribute
+                reliable tools back to the open-source community.
+            </p>
+        </div>
 
+        <section id="connect" class="mt-16 scroll-mt-16">
+            <Prompt
+                command="connect"
+                typeCommand={true}
+                speed={60}
+                data-output="connect-output"
+            />
+            <div class="mt-6 command-output" id="connect-output">
+                <ul class="space-y-2">
+                    {
+                        socials.map((social) => (
+                            <li class="font-mono text-sm md:text-base">
+                                <span class="text-accent">
+                                    - {social.name.padEnd(longestSocialName)}
+                                </span>
+                                <span class="text-text-secondary ml-2">
+                                    #{" "}
+                                    <a
+                                        href={social.url}
+                                        target="_blank"
+                                        class="text-text-secondary hover:text-accent underline"
+                                        rel:list={[
+                                            "noopener",
+                                            "noreferrer",
+                                            social.name === "mastodon" && "me",
+                                        ]}
+                                    >
+                                        {social.url}
+                                    </a>
+                                </span>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </section>
+    </section>
 </BaseLayout>
